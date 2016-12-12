@@ -146,21 +146,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				SendMessage(hWndComboBox, CB_SHOWDROPDOWN, true, (LPARAM)0);
 				SendMessage(hWndComboBox, CB_SETCURSEL, (WPARAM)5, (LPARAM)0);
 
-				SendMessage(hWndComboBox, CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-				SendMessage(
-					GetParent(hWndComboBox),
-					WM_COMMAND, 
-					MAKEWPARAM(GetDlgCtrlID(hWndComboBox), CBN_SELENDOK),
-					(LPARAM)hWndComboBox
-				);
-
-				SendMessage(
-					GetParent(hWndComboBox),
-					WM_COMMAND,
-					MAKEWPARAM(GetDlgCtrlID(hWndComboBox), CBN_SELCHANGE),
-					(LPARAM)hWndComboBox
-				);
+				/* Workaround to persist programmatically set selection. */
+				SendMessage(hWndComboBox, WM_KEYDOWN, VK_DOWN, (LPARAM)0);
+				SendMessage(hWndComboBox, WM_KEYDOWN, VK_UP, (LPARAM)0);
 
 				break;
             default:
